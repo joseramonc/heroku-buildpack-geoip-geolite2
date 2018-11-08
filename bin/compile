@@ -78,3 +78,5 @@ export PATH="\$HOME/.geoip/bin:\$PATH"
 EOF
 
 cp $BUILD_DIR/.profile.d/geoip.sh ./export
+
+export BUNDLE_BUILD__HIVE_GEOIP2="--with-maxminddb-dir=$CACHE_DIR"
