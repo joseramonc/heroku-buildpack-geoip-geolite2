@@ -23,6 +23,6 @@ LIBMAXMINDDB_CACHE_VERSION_FILE="$LIBMAXMINDDB_CACHE_DIR/libmaxminddb-version"
 echo "-----> Installing GeoLite2 data and libmaxminddb from ppa:maxmin/ppa"
 
 
-add-apt-repository ppa:maxmind/ppa
-apt update
-apt install libmaxminddb0 libmaxminddb-dev mmdb-bin
+sudo add-apt-repository ppa:maxmind/ppa
+sudo apt update
+sudo apt install libmaxminddb0 libmaxminddb-dev mmdb-bin
