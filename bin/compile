@@ -48,7 +48,7 @@ if [ -f "$LIBMAXMINDDB_CACHE_VERSION_FILE" ] && grep -Fxq "$LIBMAXMINDDB_VERSION
     export LD_LIBRARY_PATH="\$HOME/.geoip/lib:\$LD_LIBRARY_PATH"
     export PATH="\$HOME/.geoip/bin:\$PATH"
     export BUNDLE_BUILD__HIVE_GEOIP2="--with-maxminddb-dir=\$HOME/.geoip/"
-    EOF
+EOF
 else
     WORK_DIR=$(mktemp -d)
     DIST_DIR="$WORK_DIR/dist"
@@ -87,7 +87,7 @@ else
     export LD_LIBRARY_PATH="\$BUILD_DIST_DIR/lib:\$LD_LIBRARY_PATH"
     export PATH="\$BUILD_DIST_DIR/bin:\$PATH"
     export BUNDLE_BUILD__HIVE_GEOIP2="--with-maxminddb-dir=$BUILD_DIST_DIR/"
-    EOF
+EOF
 fi
 
 
