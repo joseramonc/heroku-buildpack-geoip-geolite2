@@ -34,9 +34,9 @@ wget -Nq -P "$GEOIP_CACHE_DIR" "https://geolite.maxmind.com/download/geoip/datab
 tar -xvf "$GEOIP_CACHE_DIR/$GEOLITE2_CITY_TARBALL_FILENAME" --directory "$BUILD_DIST_SHARE_DIR" --no-anchored --strip-components=1 "$GEOLITE2_CITY_FILENAME"
 tar -xvf "$GEOIP_CACHE_DIR/$GEOLITE2_COUNTRY_TARBALL_FILENAME" --directory "$BUILD_DIST_SHARE_DIR" --no-anchored --strip-components=1 "$GEOLITE2_COUNTRY_FILENAME"
 
-# if [ -f "$LIBMAXMINDDB_CACHE_VERSION_FILE" ] && grep -Fxq "$LIBMAXMINDDB_VERSION" "$LIBMAXMINDDB_CACHE_VERSION_FILE"; then
-#     echo "       Using cached build of libmaxminddb-$LIBMAXMINDDB_VERSION"
-# else
+if [ -f "$LIBMAXMINDDB_CACHE_VERSION_FILE" ] && grep -Fxq "$LIBMAXMINDDB_VERSION" "$LIBMAXMINDDB_CACHE_VERSION_FILE"; then
+    echo "       Using cached build of libmaxminddb-$LIBMAXMINDDB_VERSION"
+else
     WORK_DIR=$(mktemp -d)
     DIST_DIR="$WORK_DIR/dist"
     TAR_FILE_PATH="$WORK_DIR/libmaxminddb.tar.gz"
@@ -61,7 +61,7 @@ tar -xvf "$GEOIP_CACHE_DIR/$GEOLITE2_COUNTRY_TARBALL_FILENAME" --directory "$BUI
     rm -r "$WORK_DIR"
 
     echo "$LIBMAXMINDDB_VERSION" > "$LIBMAXMINDDB_CACHE_VERSION_FILE"
-# fi
+fi
 
 cp -r "$LIBMAXMINDDB_CACHE_DIST_DIR/." "$BUILD_DIST_DIR"
 
