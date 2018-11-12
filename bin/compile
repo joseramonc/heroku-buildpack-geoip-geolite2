@@ -16,9 +16,8 @@ BUILD_DIST_DIR="$BUILD_DIR/.geoip"
 BUILD_DIST_SHARE_DIR="$BUILD_DIST_DIR/share"
 
 GEOIP_CACHE_DIR="$CACHE_DIR/geoip"
-LIBMAXMINDDB_CACHE_DIR="$GEOIP_CACHE_DIR/libmaxminddb"
 LIBMAXMINDDB_CACHE_DIST_DIR="$GEOIP_CACHE_DIR/libmaxminddb/dist"
-LIBMAXMINDDB_CACHE_VERSION_FILE="$LIBMAXMINDDB_CACHE_DIR/libmaxminddb-version"
+LIBMAXMINDDB_CACHE_VERSION_FILE="$GEOIP_CACHE_DIR/libmaxminddb/libmaxminddb-version"
 
 echo "-----> Installing GeoLite2 data and libmaxminddb from https://www.maxmind.com"
 
