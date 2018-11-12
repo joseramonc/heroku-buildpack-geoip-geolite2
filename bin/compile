@@ -36,6 +36,19 @@ tar -xvf "$GEOIP_CACHE_DIR/$GEOLITE2_COUNTRY_TARBALL_FILENAME" --directory "$BUI
 
 if [ -f "$LIBMAXMINDDB_CACHE_VERSION_FILE" ] && grep -Fxq "$LIBMAXMINDDB_VERSION" "$LIBMAXMINDDB_CACHE_VERSION_FILE"; then
     echo "       Using cached build of libmaxminddb-$LIBMAXMINDDB_VERSION"
+    echo "       Set environment variables GEOIP_GEOLITE2_PATH, GEOIP_GEOLITE2_CITY_FILENAME, GEOIP_GEOLITE2_COUNTRY_FILENAME, BUNDLE_BUILD__HIVE_GEOIP2"
+    
+    cp -r "$LIBMAXMINDDB_CACHE_DIST_DIR/." "$BUILD_DIST_DIR"
+    
+    mkdir -p $BUILD_DIR/.profile.d
+    cat <<EOF >$BUILD_DIR/.profile.d/geoip.sh
+    export GEOIP_GEOLITE2_PATH="\$HOME/.geoip/share/"
+    export GEOIP_GEOLITE2_CITY_FILENAME="$GEOLITE2_CITY_FILENAME"
+    export GEOIP_GEOLITE2_COUNTRY_FILENAME="$GEOLITE2_COUNTRY_FILENAME"
+    export LD_LIBRARY_PATH="\$HOME/.geoip/lib:\$LD_LIBRARY_PATH"
+    export PATH="\$HOME/.geoip/bin:\$PATH"
+    export BUNDLE_BUILD__HIVE_GEOIP2="--with-maxminddb-dir=\$HOME/.geoip/"
+    EOF
 else
     WORK_DIR=$(mktemp -d)
     DIST_DIR="$WORK_DIR/dist"
@@ -61,21 +74,23 @@ else
     rm -r "$WORK_DIR"
 
     echo "$LIBMAXMINDDB_VERSION" > "$LIBMAXMINDDB_CACHE_VERSION_FILE"
+    
+    echo "       Set environment variables GEOIP_GEOLITE2_PATH, GEOIP_GEOLITE2_CITY_FILENAME, GEOIP_GEOLITE2_COUNTRY_FILENAME, BUNDLE_BUILD__HIVE_GEOIP2"
+    
+    cp -r "$LIBMAXMINDDB_CACHE_DIST_DIR/." "$BUILD_DIST_DIR"
+    
+    mkdir -p $BUILD_DIR/.profile.d
+    cat <<EOF >$BUILD_DIR/.profile.d/geoip.sh
+    export GEOIP_GEOLITE2_PATH="\$BUILD_DIST_DIR/share/"
+    export GEOIP_GEOLITE2_CITY_FILENAME="$GEOLITE2_CITY_FILENAME"
+    export GEOIP_GEOLITE2_COUNTRY_FILENAME="$GEOLITE2_COUNTRY_FILENAME"
+    export LD_LIBRARY_PATH="\$BUILD_DIST_DIR/lib:\$LD_LIBRARY_PATH"
+    export PATH="\$BUILD_DIST_DIR/bin:\$PATH"
+    export BUNDLE_BUILD__HIVE_GEOIP2="--with-maxminddb-dir=$BUILD_DIST_DIR/"
+    EOF
 fi
 
-cp -r "$LIBMAXMINDDB_CACHE_DIST_DIR/." "$BUILD_DIST_DIR"
 
-echo "       Set environment variables GEOIP_GEOLITE2_PATH, GEOIP_GEOLITE2_CITY_FILENAME, GEOIP_GEOLITE2_COUNTRY_FILENAME, BUNDLE_BUILD__HIVE_GEOIP2"
-
-mkdir -p $BUILD_DIR/.profile.d
-cat <<EOF >$BUILD_DIR/.profile.d/geoip.sh
-export GEOIP_GEOLITE2_PATH="\$BUILD_DIST_DIR/share/"
-export GEOIP_GEOLITE2_CITY_FILENAME="$GEOLITE2_CITY_FILENAME"
-export GEOIP_GEOLITE2_COUNTRY_FILENAME="$GEOLITE2_COUNTRY_FILENAME"
-export LD_LIBRARY_PATH="\$BUILD_DIST_DIR/lib:\$LD_LIBRARY_PATH"
-export PATH="\$BUILD_DIST_DIR/bin:\$PATH"
-export BUNDLE_BUILD__HIVE_GEOIP2="--with-maxminddb-dir=$BUILD_DIST_DIR/"
-EOF
 
 cp $BUILD_DIR/.profile.d/geoip.sh ./export
 
