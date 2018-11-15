@@ -19,7 +19,7 @@ The GeoLite2 databases are distributed under the Creative Commons Attribution-Sh
 ### Heroku
 
 ```sh
-$ heroku buildpacks:add https://github.com/danstiner/heroku-buildpack-geoip-geolite2.git
+$ heroku buildpacks:add https://github.com/legalmonster/heroku-buildpack-geoip-geolite2.git
 ```
 
 ### Django GeoIP2
